@@ -29,12 +29,21 @@ public class OrganizationController {
     public String getOrganiztionById(@PathVariable(name = "id") long id) throws JSONException {
         Organization organization = organizationRepository.findById(id).orElseThrow();
 
-        return organizationToJson.newJsonObject(organization).toString();
+        return  getOrganization(organization);
     }
 
     @GetMapping("/organizationName/{name}")
     public String getOrganiztionByName(@PathVariable(name = "name") String name) throws JSONException {
         Organization organization = organizationRepository.findByCname(name);
+
+        return  getOrganization(organization);
+    }
+
+    private String getOrganization(Organization organization) throws JSONException {
+        if(organization == null)
+        {
+            return "No such organization";
+        }
 
         return organizationToJson.newJsonObject(organization).toString();
     }

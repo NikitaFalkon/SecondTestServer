@@ -7,6 +7,7 @@ import com.model.DocModel;
 import com.repository.BankRepository;
 import com.repository.DocumentRepository;
 import com.repository.OrganizationRepository;
+import com.repository.TreasuryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class TableCreator {
     DocumentRepository documentRepository;
     @Autowired
     EntityServiceImpl entityService;
+    @Autowired
+    TreasuryRepository treasuryRepository;
+
 
     public void create(List<DocModel> docs) {
         docs.forEach(doc -> {
@@ -41,21 +45,23 @@ public class TableCreator {
         document.setNumber(doc.getDocNum());
         document.setType(doc.getOperType());
 
-        if (bankRepository.existsBankByBic(bankpay.getBic()) == false) {
+        if (!bankRepository.existsBankByBic(bankpay.getBic()) ||
+               !bankRepository.existsBankByAccount(bankpay.getAccount())) {
             document.setPayerBank(newBank(bankpay));
         } else {
-            document.setPayerBank(bankRepository.findByBic(bankpay.getBic()));
+            document.setPayerBank(bankRepository.findByTreasury(bankpay.getTreasury()));
         }
 
-        if (bankRepository.existsBankByBic(bankrcp.getBic()) == false) {
+        if (!bankRepository.existsBankByBic(bankrcp.getBic()) ||
+                !bankRepository.existsBankByAccount(bankrcp.getAccount())) {
             document.setRecipientBank(newBank(bankrcp));
         } else {
-            document.setRecipientBank(bankRepository.findByBic(bankrcp.getBic()));
+            document.setRecipientBank(bankRepository.findByTreasury(bankrcp.getTreasury()));
         }
 
-        if (organizationRepository.existsOrganizationByInn(organizationpay.getInn()) == false &&
-                organizationRepository.existsOrganizationByKpp(organizationpay.getKpp()) == false) {
-            if (organizationRepository.existsOrganizationByCname(organizationpay.getCname()) == false) {
+        if (!organizationRepository.existsOrganizationByInn(organizationpay.getInn()) &&
+                !organizationRepository.existsOrganizationByKpp(organizationpay.getKpp())) {
+            if (!organizationRepository.existsOrganizationByCname(organizationpay.getCname())) {
                 document.setPayerOrganization(newOrganization(organizationpay));
             } else {
                 document.setPayerOrganization(organizationRepository.findByCname(organizationpay.getCname()));
@@ -64,9 +70,9 @@ public class TableCreator {
             document.setPayerOrganization(organizationRepository.findByInn(organizationpay.getInn()));
         }
 
-        if (organizationRepository.existsOrganizationByInn(organizationrcp.getInn()) == false &&
-                organizationRepository.existsOrganizationByKpp(organizationrcp.getKpp()) == false) {
-            if (organizationRepository.existsOrganizationByCname(organizationrcp.getCname()) == false) {
+        if (!organizationRepository.existsOrganizationByInn(organizationrcp.getInn()) &&
+                !organizationRepository.existsOrganizationByKpp(organizationrcp.getKpp())) {
+            if (!organizationRepository.existsOrganizationByCname(organizationrcp.getCname())) {
                 document.setRecipientOrganization(newOrganization(organizationrcp));
             } else {
                 document.setRecipientOrganization(organizationRepository.findByCname(organizationrcp.getCname()));

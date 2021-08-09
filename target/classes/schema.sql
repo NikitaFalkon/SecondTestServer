@@ -1,10 +1,15 @@
+CREATE TABLE IF NOT EXISTS treasury(
+                                      id   INTEGER      NOT NULL AUTO_INCREMENT,
+                                      acc VARCHAR(25),
+                                      PRIMARY KEY (id)
+);
 CREATE TABLE IF NOT EXISTS bank (
     id   INTEGER      NOT NULL AUTO_INCREMENT,
     bic VARCHAR(20),
     account VARCHAR(20),
-    treasuryaccount VARCHAR(20),
-    PRIMARY KEY (id)
-
+    treasury_ID INTEGER,
+    PRIMARY KEY (id),
+    FOREIGN KEY (treasury_ID) REFERENCES treasury(id)
 );
 CREATE TABLE IF NOT EXISTS organization (
     id   INTEGER      NOT NULL AUTO_INCREMENT,

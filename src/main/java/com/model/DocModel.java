@@ -1,12 +1,13 @@
 package com.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class DocModel implements Serializable {
     private String docNum;
     private String docDate;
     private String operType;
-    private String amountOut;
+    private BigDecimal amountOut;
     private String INN_PAY;
     private String KPP_PAY;
     private String cName_PAY;
@@ -24,7 +25,7 @@ public class DocModel implements Serializable {
 
     public DocModel(String docNum, String docDate,
                     String operType,
-                    String amountOut, String DocGUID,
+                    BigDecimal amountOut, String DocGUID,
                     String INN_PAY, String KPP_PAY,
                     String CName_PAY, String BS_PAY,
                     String BIC_PAY, String BS_KS_PAY,
@@ -192,11 +193,11 @@ public class DocModel implements Serializable {
         this.docDate = docDate;
     }
 
-    public String getAmountOut() {
+    public BigDecimal getAmountOut() {
         return amountOut;
     }
 
-    public void setAmountOut(String amountOut) {
+    public void setAmountOut(BigDecimal amountOut) {
         this.amountOut = amountOut;
     }
 }

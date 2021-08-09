@@ -1,18 +1,24 @@
 package com.service;
 
+import com.entity.Treasury;
 import com.entity.Bank;
 import com.entity.Organization;
 import com.interfaces.EntityService;
 import com.model.DocModel;
+import com.repository.TreasuryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EntityServiceImpl implements EntityService {
+    @Autowired
+    TreasuryRepository accountRepository;
+
     public Bank getBankPay(DocModel docModel){
         Bank bank = new Bank();
         bank.setBic(docModel.getBIC_PAY());
         bank.setAccount(docModel.getBS_PAY());
-        bank.setTreasuryaccount(docModel.getBS_KS_PAY());
+        bank.setTreasury(giveTreasury(docModel.getBS_KS_PAY()));
 
         return bank;
     }
@@ -21,7 +27,7 @@ public class EntityServiceImpl implements EntityService {
         Bank bank = new Bank();
         bank.setBic(docModel.getBIC_RCP());
         bank.setAccount(docModel.getBS_RCP());
-        bank.setTreasuryaccount(docModel.getBS_KS_RCP());
+        bank.setTreasury(giveTreasury(docModel.getBS_KS_RCP()));
 
         return bank;
     }
@@ -42,5 +48,17 @@ public class EntityServiceImpl implements EntityService {
         organization.setKpp(docModel.getKPP_RCP());
 
         return organization;
+    }
+
+    public Treasury giveTreasury(String account) {
+        if(accountRepository.existsTreasuryByAcc(account)) {
+           return accountRepository.findByAcc(account);
+        }
+
+        Treasury treasury = new Treasury();
+        treasury.setAcc(account);
+        accountRepository.save(treasury);
+
+        return treasury;
     }
 }

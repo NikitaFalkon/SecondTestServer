@@ -1,6 +1,7 @@
 package com.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "document")
@@ -12,7 +13,7 @@ public class Document {
     private String date;
     private String GUID;
     private String type;
-    private String sum;
+    private BigDecimal sum;
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="bankrec_id", nullable=false)
     private Bank recipientBank;
@@ -98,11 +99,11 @@ public class Document {
         this.type = type;
     }
 
-    public String getSum() {
+    public BigDecimal getSum() {
         return sum;
     }
 
-    public void setSum(String sum) {
+    public void setSum(BigDecimal sum) {
         this.sum = sum;
     }
 }

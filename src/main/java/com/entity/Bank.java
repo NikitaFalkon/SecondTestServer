@@ -11,7 +11,9 @@ public class Bank {
     private long id;
     private String account;
     private String bic;
-    private String treasuryaccount;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="treasury_id", nullable=false)
+    private Treasury treasury;
     @OneToMany (cascade=CascadeType.ALL, mappedBy="recipientBank")
     private List<Document> recipientDocuments;
     @OneToMany (cascade=CascadeType.ALL, mappedBy="payerBank")
@@ -57,11 +59,11 @@ public class Bank {
         this.account = account;
     }
 
-    public String getTreasuryaccount() {
-        return treasuryaccount;
+    public Treasury getTreasury() {
+        return treasury;
     }
 
-    public void setTreasuryaccount(String treasuryaccount) {
-        this.treasuryaccount = treasuryaccount;
+    public void setTreasury(Treasury treasury) {
+        this.treasury = treasury;
     }
 }

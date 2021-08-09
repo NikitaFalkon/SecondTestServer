@@ -3,10 +3,7 @@ package com.service;
 import com.entity.Document;
 import com.interfaces.ApacheService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -31,9 +28,9 @@ public class ApacheServiceImpl implements ApacheService {
         Cell bicbankp1 = row1.createCell(4);
         bicbankp1.setCellValue("БИК банка плательщика");
         Cell namecell1 = row1.createCell(5);
-        bicbankp1.setCellValue("Наименование получателя");
+        namecell1.setCellValue("Наименование получателя");
         Cell bicbankc1 = row1.createCell(6);
-        bicbankp1.setCellValue("БИК банка получателя");
+        bicbankc1.setCellValue("БИК банка получателя");
 
         for (int x = 0; x < documents.size(); x++) {
             Row row = sheet.createRow(x+1);
@@ -42,15 +39,15 @@ public class ApacheServiceImpl implements ApacheService {
             Cell date = row.createCell(1);
             date.setCellValue(documents.get(x).getDate());
             Cell sum = row.createCell(2);
-            sum.setCellValue(documents.get(x).getSum());
+            sum.setCellValue((RichTextString) documents.get(x).getSum());
             Cell namepayer = row.createCell(3);
             namepayer.setCellValue(documents.get(x).getPayerOrganization().getCname());
             Cell bicbankp = row.createCell(4);
             bicbankp.setCellValue(documents.get(x).getPayerBank().getBic());
             Cell namecell = row.createCell(5);
-            bicbankp.setCellValue(documents.get(x).getRecipientOrganization().getCname());
+            namecell.setCellValue(documents.get(x).getRecipientOrganization().getCname());
             Cell bicbankc = row.createCell(6);
-            bicbankp.setCellValue(documents.get(x).getRecipientBank().getBic());
+            bicbankc.setCellValue(documents.get(x).getRecipientBank().getBic());
         }
 
         book.write(new FileOutputStream(file));
