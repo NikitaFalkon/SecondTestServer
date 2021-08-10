@@ -15,4 +15,6 @@ public interface OrganizationRepository extends JpaRepository<Organization, Long
     Organization findByCname(String name);
 
     boolean existsOrganizationByCname(String cname);
+
+    Organization findOrganizationdById(long id);
 }

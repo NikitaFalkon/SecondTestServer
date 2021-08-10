@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS bank (
 );
 CREATE TABLE IF NOT EXISTS organization (
     id   INTEGER      NOT NULL AUTO_INCREMENT,
-    inn VARCHAR(20),
+    inn VARCHAR(37),
     kpp VARCHAR(20),
     cname VARCHAR(25),
     PRIMARY KEY (id)

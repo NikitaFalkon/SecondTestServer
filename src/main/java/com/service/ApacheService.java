@@ -1,4 +1,4 @@
-package com.interfaces;
+package com.service;
 
 import com.entity.Document;
 
@@ -7,5 +7,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ApacheService {
-    public void createNewDoc(File file, List<Document> documents) throws IOException;
+    void createNewDoc(File file, List<Document> documents) throws IOException;
 }

@@ -2,9 +2,9 @@ package com.controller;
 
 import com.entity.Document;
 import com.repository.DocumentRepository;
-import com.service.ApacheServiceImpl;
-import com.service.DocumentServiceImpl;
-import com.service.JsonServiceImpl;
+import com.service.impl.ApacheServiceImpl;
+import com.service.impl.DocumentServiceImpl;
+import com.service.impl.JsonServiceImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,6 @@ import java.util.List;
 @RestController
 public class DocumentController {
     @Autowired
-    DocumentRepository documentRepository;
-    @Autowired
     DocumentServiceImpl documentService;
     @Autowired
     JsonServiceImpl jsonService;
@@ -29,7 +27,7 @@ public class DocumentController {
 
     @GetMapping("/document")
     public String allDocuments(Model model) throws JSONException {
-        List<Document> documentList = documentRepository.findAll();
+        List<Document> documentList = documentService.findAll();
         JSONObject object = jsonService.documentsToJson(documentList, documentService.findSum(documentList));
 
         return object.toString();
@@ -38,7 +36,7 @@ public class DocumentController {
     @GetMapping(value = "/createpoi")
     public String createPoi() throws IOException {
         File file = new File("Documents.xls");
-        apacheService.createNewDoc(file, documentRepository.findAll());
+        apacheService.createNewDoc(file, documentService.findAll());
 
         return "done!";
     }

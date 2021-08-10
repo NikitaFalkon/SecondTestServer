@@ -1,8 +1,8 @@
-package com.service;
+package com.service.impl;
 
 import com.entity.Document;
 import com.entity.Organization;
-import com.interfaces.JsonService;
+import com.service.JsonService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 public class JsonServiceImpl implements JsonService {
+    @Override
     public JSONObject toJsonList(List<Organization> organizations) {
         JSONObject resultJson = new JSONObject();
 
@@ -29,6 +30,7 @@ public class JsonServiceImpl implements JsonService {
         return resultJson;
     }
 
+    @Override
     public JSONObject newJsonObject(Organization organization) throws JSONException {
         JSONObject obj = new JSONObject();
         int recdocuments = organization.getRecipientDocuments().size();
@@ -39,6 +41,7 @@ public class JsonServiceImpl implements JsonService {
         return obj;
     }
 
+    @Override
     public JSONObject documentsToJson(List<Document> documentList, String sum) throws JSONException {
         JSONObject obj = new JSONObject();
         obj.put("documents", documentList.size());
