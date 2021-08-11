@@ -5,13 +5,16 @@ import com.entity.Document;
 import com.entity.Organization;
 import com.model.DocModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface DocumentService {
-    String findSum(List<Document> documentList);
+    BigDecimal getAverageSum(List<Document> documentList);
 
     List<Document> findAll();
 
-    void newDocument(DocModel doc, Organization organizationpay,
+    void create(DocModel doc, Organization organizationpay,
                      Organization organizationrcp, Bank bankpay, Bank bankrcp);
+
+    String getDocument(String guid);
 }

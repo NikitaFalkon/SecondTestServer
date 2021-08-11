@@ -6,7 +6,7 @@ import com.model.DocModel;
 import java.util.List;
 
 public interface OrganizationService {
-    Organization newOrganization(Organization organization);
+    Organization create(Organization organization);
 
     Organization getOrganization(Organization organization);
 

@@ -1,10 +1,9 @@
 package com.controller;
 
 import com.entity.Document;
-import com.repository.DocumentRepository;
-import com.service.impl.ApacheServiceImpl;
-import com.service.impl.DocumentServiceImpl;
-import com.service.impl.JsonServiceImpl;
+import com.service.ApacheService;
+import com.service.DocumentService;
+import com.service.JsonService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +18,19 @@ import java.util.List;
 @RestController
 public class DocumentController {
     @Autowired
-    DocumentServiceImpl documentService;
+    DocumentService documentService;
     @Autowired
-    JsonServiceImpl jsonService;
+    JsonService jsonService;
     @Autowired
-    ApacheServiceImpl apacheService;
+    ApacheService apacheService;
 
     @GetMapping("/document")
     public String allDocuments(Model model) throws JSONException {
-        List<Document> documentList = documentService.findAll();
-        JSONObject object = jsonService.documentsToJson(documentList, documentService.findSum(documentList));
+        /*List<Document> documentList = documentService.findAll();
+        JSONObject object = jsonService.documentsToJson(documentList, documentService.getAverageSum(documentList).toString());
 
-        return object.toString();
+        return object.toString();*/
+        return documentService.getDocument("ba44ab7a-1341-19a7-e054-001e0b59efca");
     }
 
     @GetMapping(value = "/createpoi")

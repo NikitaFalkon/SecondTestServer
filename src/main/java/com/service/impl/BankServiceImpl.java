@@ -20,7 +20,7 @@ public class BankServiceImpl implements BankService {
         Bank bank = new Bank();
         bank.setBic(docModel.getBic_Pay());
         bank.setAccount(docModel.getBs_Pay());
-        bank.setTreasury(treasuryService.giveTreasury(docModel.getBs_Ks_Pay()));
+        bank.setTreasury(treasuryService.create(docModel.getBs_Ks_Pay()));
 
         return bank;
     }
@@ -30,7 +30,7 @@ public class BankServiceImpl implements BankService {
         Bank bank = new Bank();
         bank.setBic(docModel.getBic_Rcp());
         bank.setAccount(docModel.getBs_Rcp());
-        bank.setTreasury(treasuryService.giveTreasury(docModel.getBs_Ks_Rcp()));
+        bank.setTreasury(treasuryService.create(docModel.getBs_Ks_Rcp()));
 
         return bank;
     }
@@ -39,14 +39,14 @@ public class BankServiceImpl implements BankService {
     public Bank setBank(Bank bank) {
         if (!bankRepository.existsBankByBic(bank.getBic()) ||
                 !bankRepository.existsBankByAccount(bank.getAccount())) {
-            return newBank(bank);
+            return create(bank);
         } else {
             return bankRepository.findByTreasury(bank.getTreasury());
         }
     }
 
     @Override
-    public Bank newBank(Bank bank) {
+    public Bank create(Bank bank) {
         bankRepository.save(bank);
 
         return bank;

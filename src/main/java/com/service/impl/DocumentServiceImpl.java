@@ -4,33 +4,57 @@ import com.entity.Bank;
 import com.entity.Document;
 import com.entity.Organization;
 import com.model.DocModel;
+import com.repository.DocumentGrudRepository;
 import com.repository.DocumentRepository;
 import com.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.List;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
     @Autowired
     DocumentRepository documentRepository;
+    @Autowired
+    DocumentGrudRepository documentGrudRepository;
 
-    @Override
-    public String findSum(List<Document> documentList){
+    /*@Override
+    public BigDecimal getAverageSum(List<Document> documentList){
         BigDecimal sum = BigDecimal.ZERO;
 
-        for (int o=0; o<documentList.size(); o++) {
-            BigDecimal bigDecimal = documentList.get(o).getSum();
+        for (Document document : documentList) {
+            BigDecimal bigDecimal = document.getSum();
             sum = sum.add(bigDecimal);
         }
 
         sum = sum.divide(BigDecimal.valueOf(documentList.size()));
-        DecimalFormat f = new DecimalFormat("##.00");
+        //DecimalFormat f = new DecimalFormat("##.00");
 
-        return f.format(sum);
+        return sum;
+    }*/
+
+    @Override
+    public String getDocument(String guid) {
+       return documentGrudRepository.findDocument(guid);
+    }
+
+    @Override
+    public BigDecimal getAverageSum(List<Document> documentList) {
+        /*BigDecimal sum = BigDecimal.ZERO;
+
+        for (Document document : documentList) {
+            BigDecimal bigDecimal = document.getAmount();
+            sum = sum.add(bigDecimal);
+        }
+
+        sum = sum.divide(BigDecimal.valueOf(documentList.size()));
+        //DecimalFormat f = new DecimalFormat("##.00");*/
+        BigDecimal sum = documentGrudRepository.findAmount();
+
+        return sum;
     }
 
     @Override
@@ -39,12 +63,12 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void newDocument(DocModel doc, Organization organizationpay,
+    public void create(DocModel doc, Organization organizationpay,
                             Organization organizationrcp, Bank bankpay, Bank bankrcp) {
         Document document = new Document();
-        document.setSum(doc.getAmountOut());
+        document.setAmount(doc.getAmountOut());
         document.setDate(doc.getDocDate());
-        document.setGUID(doc.getDocGuid());
+        document.setGuid(doc.getDocGuid());
         document.setNumber(doc.getDocNum());
         document.setType(doc.getOperType());
         document.setPayerBank(bankpay);

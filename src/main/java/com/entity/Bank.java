@@ -8,8 +8,11 @@ import java.util.List;
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+    @Column(name = "account")
     private String account;
+    @Column(name = "bic")
     private String bic;
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="treasury_id", nullable=false)

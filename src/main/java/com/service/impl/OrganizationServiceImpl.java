@@ -15,7 +15,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     OrganizationRepository organizationRepository;
 
     @Override
-    public Organization newOrganization(Organization organization) {
+    public Organization create(Organization organization) {
         organizationRepository.save(organization);
 
         return organization;
@@ -26,7 +26,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (!organizationRepository.existsOrganizationByInn(organization.getInn()) &&
                 !organizationRepository.existsOrganizationByKpp(organization.getKpp())) {
             if (!organizationRepository.existsOrganizationByCname(organization.getCname())) {
-                return newOrganization(organization);
+                return create(organization);
             } else {
                 return organizationRepository.findByCname(organization.getCname());
             }

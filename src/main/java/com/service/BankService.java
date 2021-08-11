@@ -11,5 +11,5 @@ public interface BankService {
 
     Bank setBank(Bank bank);
 
-    Bank newBank(Bank bank);
+    Bank create(Bank bank);
 }

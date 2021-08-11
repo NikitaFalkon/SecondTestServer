@@ -11,7 +11,7 @@ public class TreasuryServiceImpl implements TreasuryService {
     @Autowired
     TreasuryRepository treasuryRepository;
 
-    public Treasury giveTreasury(String account) {
+    public Treasury create(String account) {
         Treasury treasury = treasuryRepository.findByAcc(account);
         if(treasury != null) {
             return treasury;

@@ -6,7 +6,9 @@ import javax.persistence.*;
 public class Treasury {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+    @Column(name = "acc")
     private String acc;
     @OneToOne(mappedBy="treasury")
     private Bank bank;

@@ -8,12 +8,18 @@ import java.math.BigDecimal;
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+    @Column(name = "number")
     private String number;
+    @Column(name = "date")
     private String date;
-    private String GUID;
+    @Column(name = "guid")
+    private String guid;
+    @Column(name = "type")
     private String type;
-    private BigDecimal sum;
+    @Column(name = "amount")
+    private BigDecimal amount;
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="bankrec_id", nullable=false)
     private Bank recipientBank;
@@ -83,12 +89,12 @@ public class Document {
         this.date = date;
     }
 
-    public String getGUID() {
-        return GUID;
+    public String getGuid() {
+        return guid;
     }
 
-    public void setGUID(String GUID) {
-        this.GUID = GUID;
+    public void setGuid(String GUID) {
+        this.guid = GUID;
     }
 
     public String getType() {
@@ -99,11 +105,11 @@ public class Document {
         this.type = type;
     }
 
-    public BigDecimal getSum() {
-        return sum;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setSum(BigDecimal sum) {
-        this.sum = sum;
+    public void setAmount(BigDecimal sum) {
+        this.amount = sum;
     }
 }

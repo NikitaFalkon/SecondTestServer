@@ -40,7 +40,7 @@ public class ApacheServiceImpl implements ApacheService {
             Cell date = row.createCell(1);
             date.setCellValue(documents.get(x).getDate());
             Cell sum = row.createCell(2);
-            sum.setCellValue((RichTextString) documents.get(x).getSum());
+            sum.setCellValue((RichTextString) documents.get(x).getAmount());
             Cell namepayer = row.createCell(3);
             namepayer.setCellValue(documents.get(x).getPayerOrganization().getCname());
             Cell bicbankp = row.createCell(4);
