@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS organization (
 );
 CREATE TABLE IF NOT EXISTS document (
     id   INTEGER      NOT NULL AUTO_INCREMENT,
-    sum NUMERIC(15, 2),
+    amount NUMERIC(15, 2),
     date TIMESTAMP,
     GUID VARCHAR (36),
     number VARCHAR (20),
