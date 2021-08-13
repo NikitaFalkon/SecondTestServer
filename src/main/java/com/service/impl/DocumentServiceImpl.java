@@ -22,36 +22,20 @@ public class DocumentServiceImpl implements DocumentService {
     DocumentGrudRepository documentGrudRepository;
 
     /*@Override
-    public BigDecimal getAverageSum(List<Document> documentList){
-        BigDecimal sum = BigDecimal.ZERO;
+    public String getDocuments() {
+        String s = "";
+        List<Document> documentList = findAll();
 
         for (Document document : documentList) {
-            BigDecimal bigDecimal = document.getSum();
-            sum = sum.add(bigDecimal);
+            s = s + documentGrudRepository.find(document.getGuid()) + "\n";
         }
 
-        sum = sum.divide(BigDecimal.valueOf(documentList.size()));
-        //DecimalFormat f = new DecimalFormat("##.00");
-
-        return sum;
+        return s;
     }*/
 
     @Override
-    public String getDocument(String guid) {
-       return documentGrudRepository.findDocument(guid);
-    }
-
-    @Override
-    public BigDecimal getAverageSum(List<Document> documentList) {
-        /*BigDecimal sum = BigDecimal.ZERO;
-
-        for (Document document : documentList) {
-            BigDecimal bigDecimal = document.getAmount();
-            sum = sum.add(bigDecimal);
-        }
-
-        sum = sum.divide(BigDecimal.valueOf(documentList.size()));
-        //DecimalFormat f = new DecimalFormat("##.00");*/
+    public BigDecimal getAverageSum() {
+        List<Document> documentList = findAll();
         BigDecimal sum = documentGrudRepository.findAmount();
 
         return sum;

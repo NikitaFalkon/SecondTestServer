@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface DocumentService {
-    BigDecimal getAverageSum(List<Document> documentList);
+    BigDecimal getAverageSum();
 
     List<Document> findAll();
 
     void create(DocModel doc, Organization organizationpay,
                      Organization organizationrcp, Bank bankpay, Bank bankrcp);
 
-    String getDocument(String guid);
+    //String getDocuments();
 }

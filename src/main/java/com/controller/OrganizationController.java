@@ -1,6 +1,8 @@
 package com.controller;
 
 import com.entity.Organization;
+import com.model.Result;
+import com.repository.DocumentGrudRepository;
 import com.service.OrganizationService;
 import com.service.impl.JsonServiceImpl;
 import org.json.JSONException;
@@ -17,34 +19,32 @@ public class OrganizationController {
     OrganizationService organizationService;
     @Autowired
     JsonServiceImpl organizationToJson;
+    @Autowired
+    DocumentGrudRepository documentGrudRepository;
 
-    /*@GetMapping("/organizations")
-    public String getOrganiztions() {
-        List<Organization> organizations = organizationService.findAll();
+    @GetMapping("/organizations")
+    public String getOrganizations() {
+        return organizationService.getFullResult().toString();
+    }
 
-        return organizationToJson.toJsonList(organizations).toString();
-    }*/
+    @GetMapping("/organizationId/{id}")
+    public String getOrganizationById(@PathVariable(name = "id") long id) throws JSONException {
+        List<Result> results = organizationService.getResultById(id);
+        return getResults(results);
+    }
 
-    /*@GetMapping("/organizationId/{id}")
-    public String getOrganiztionById(@PathVariable(name = "id") long id) throws JSONException {
-        Organization organization = organizationService.findOrganizationdById(id);
+    @GetMapping("/organizationName/{name}")
+    public String getOrganizationByName(@PathVariable(name = "name") String name) throws JSONException {
+        List<Result> results = organizationService.getResultByName(name);
+        return getResults(results);
+    }
 
-        return  getOrganization(organization);
-    }*/
-
-    /*@GetMapping("/organizationName/{name}")
-    public String getOrganiztionByName(@PathVariable(name = "name") String name) throws JSONException {
-        Organization organization = organizationService.findByCname(name);
-
-        return  getOrganization(organization);
-    }*/
-
-    /*private String getOrganization(Organization organization) throws JSONException {
-        if(organization == null)
+    private String getResults(List<Result> results) throws JSONException {
+        if(results.size()==0)
         {
             return "No such organization";
         }
 
-        return organizationToJson.newJsonObject(organization).toString();
-    }*/
+        return results.toString();
+    }
 }

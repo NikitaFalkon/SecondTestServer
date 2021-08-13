@@ -10,7 +10,7 @@ import java.util.List;
 public interface JsonService {
     //JSONObject toJsonList(List<Organization> organizations);
 
-    JSONObject newJsonObject(Organization organization) throws JSONException;
+    //JSONObject newJsonObject(Organization organization) throws JSONException;
 
-    JSONObject documentsToJson(List<Document> documentList, String sum) throws JSONException;
+    JSONObject documentsToJson() throws JSONException;
 }

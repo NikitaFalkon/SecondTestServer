@@ -2,6 +2,8 @@ package com.service.impl;
 
 import com.entity.Organization;
 import com.model.DocModel;
+import com.model.Result;
+import com.repository.OrganizationCrudRepository;
 import com.repository.OrganizationRepository;
 import com.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import java.util.List;
 public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     OrganizationRepository organizationRepository;
+    @Autowired
+    OrganizationCrudRepository organizationCrudRepository;
 
     @Override
     public Organization create(Organization organization) {
@@ -33,6 +37,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         } else {
             return organizationRepository.findByInn(organization.getInn());
         }
+    }
+    @Override
+    public List<Result> getFullResult() {
+        return organizationCrudRepository.getAll();
     }
 
     @Override
@@ -61,12 +69,12 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public Organization findOrganizationdById(long id) {
-        return organizationRepository.findOrganizationdById(id);
+    public List<Result> getResultById(long id) {
+        return organizationCrudRepository.getById(id);
     }
 
     @Override
-    public Organization findByCname(String name) {
-        return organizationRepository.findByCname(name);
+    public List<Result> getResultByName(String name) {
+        return organizationCrudRepository.getByCname(name);
     }
 }

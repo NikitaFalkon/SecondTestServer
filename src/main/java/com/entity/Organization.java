@@ -16,10 +16,6 @@ public class Organization {
     private String kpp;
     @Column(name = "cname")
     private String cname;
-    //@OneToMany(cascade=CascadeType.ALL, mappedBy = "recipientOrganization")
-    //private List<Document> recipientDocuments;
-    //@OneToMany(cascade=CascadeType.ALL, mappedBy = "payerOrganization")
-    //private List<Document> payerDocuments;
 
     public long getId() {
         return id;
