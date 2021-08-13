@@ -1,9 +1,6 @@
 package com.service.impl;
 
 import com.entity.Document;
-import com.entity.Organization;
-import com.repository.DocumentGrudRepository;
-import com.repository.DocumentRepository;
 import com.service.DocumentService;
 import com.service.JsonService;
 import org.json.JSONException;

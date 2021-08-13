@@ -1,8 +1,7 @@
 package com.controller;
 
-import com.entity.Organization;
 import com.model.Result;
-import com.repository.DocumentGrudRepository;
+import com.repository.DocumentCrudRepository;
 import com.service.OrganizationService;
 import com.service.impl.JsonServiceImpl;
 import org.json.JSONException;
@@ -20,7 +19,7 @@ public class OrganizationController {
     @Autowired
     JsonServiceImpl organizationToJson;
     @Autowired
-    DocumentGrudRepository documentGrudRepository;
+    DocumentCrudRepository documentGrudRepository;
 
     @GetMapping("/organizations")
     public String getOrganizations() {

@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface DocumentGrudRepository extends CrudRepository<Document, Long> {
+public interface DocumentCrudRepository extends CrudRepository<Document, Long> {
     @Query("select recipientOrganization.cname, payerOrganization.cname, amount from Document where guid = ?1")
     String find(String guid);
 
