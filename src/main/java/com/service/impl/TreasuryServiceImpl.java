@@ -4,6 +4,7 @@ import com.entity.Treasury;
 import com.repository.TreasuryRepository;
 import com.service.TreasuryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +12,7 @@ public class TreasuryServiceImpl implements TreasuryService {
     @Autowired
     TreasuryRepository treasuryRepository;
 
+    @Cacheable(cacheNames = "account")
     public Treasury create(String account) {
         Treasury treasury = treasuryRepository.findByAcc(account);
         if(treasury != null) {

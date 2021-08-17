@@ -1,10 +1,10 @@
 package com.controller;
 
 import com.model.DocModel;
+import com.service.BankService;
+import com.service.DocumentService;
 import com.service.OrganizationService;
-import com.service.impl.BankServiceImpl;
-import com.service.impl.DocumentServiceImpl;
-import com.service.impl.TreasuryServiceImpl;
+import com.service.TreasuryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,22 +18,22 @@ import java.util.List;
 @RestController
 public class ReportController {
     @Autowired
-    BankServiceImpl bankService;
+    BankService bankService;
     @Autowired
     OrganizationService organizationService;
     @Autowired
-    DocumentServiceImpl documentService;
+    DocumentService documentService;
     @Autowired
-    TreasuryServiceImpl treasuryService;
+    TreasuryService treasuryService;
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
     public ResponseEntity<String> create(@RequestBody List<DocModel> docModelList) {
         String response = docModelList.toString();
-        getDocs(docModelList);
+        createDocs(docModelList);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public void getDocs(List<DocModel> docs) {
+    public void createDocs(List<DocModel> docs) {
         docs.forEach(doc -> {
             documentService.create(doc,
                     organizationService.getOrganization(organizationService.getInfPay(doc)),

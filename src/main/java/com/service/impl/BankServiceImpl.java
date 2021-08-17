@@ -1,11 +1,12 @@
 package com.service.impl;
 
 import com.entity.Bank;
-import com.entity.Treasury;
 import com.model.DocModel;
 import com.repository.BankRepository;
 import com.service.BankService;
+import com.service.TreasuryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,9 +14,10 @@ public class BankServiceImpl implements BankService {
     @Autowired
     BankRepository bankRepository;
     @Autowired
-    TreasuryServiceImpl treasuryService;
+    TreasuryService treasuryService;
 
     @Override
+    @Cacheable(cacheNames = "docModel")
     public Bank getBankPay(DocModel docModel) {
         Bank bank = new Bank();
         bank.setBic(docModel.getBic_Pay());
@@ -26,6 +28,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    @Cacheable(cacheNames = "docModel")
     public Bank getBankRcp(DocModel docModel) {
         Bank bank = new Bank();
         bank.setBic(docModel.getBic_Rcp());

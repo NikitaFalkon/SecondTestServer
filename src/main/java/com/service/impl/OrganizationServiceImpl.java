@@ -1,12 +1,13 @@
 package com.service.impl;
 
+import com.entity.Document;
 import com.entity.Organization;
 import com.model.DocModel;
 import com.model.Result;
-import com.repository.OrganizationCrudRepository;
 import com.repository.OrganizationRepository;
 import com.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,6 @@ import java.util.List;
 public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     OrganizationRepository organizationRepository;
-    @Autowired
-    OrganizationCrudRepository organizationCrudRepository;
 
     @Override
     public Organization create(Organization organization) {
@@ -39,11 +38,14 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
     }
     @Override
+    @Cacheable(cacheNames = "results")
     public List<Result> getFullResult() {
-        return organizationCrudRepository.getAll();
+        List<Result> results = organizationRepository.getAll();
+        return results;
     }
 
     @Override
+    @Cacheable(cacheNames = "docModel")
     public Organization getInfPay(DocModel docModel) {
         Organization organization = new Organization();
         organization.setInn(docModel.getInn_Pay());
@@ -54,6 +56,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    @Cacheable(cacheNames = "docModel")
     public Organization getInfRcp(DocModel docModel) {
         Organization organization = new Organization();
         organization.setInn(docModel.getInn_Rcp());
@@ -64,17 +67,21 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    @Cacheable(cacheNames = "organizations")
     public List<Organization> findAll() {
-        return organizationRepository.findAll();
+        List<Organization> organizations = organizationRepository.findAll();
+        return organizations;
     }
 
     @Override
+    @Cacheable(cacheNames = "id")
     public List<Result> getResultById(long id) {
-        return organizationCrudRepository.getById(id);
+        return organizationRepository.getById(id);
     }
 
     @Override
+    @Cacheable(cacheNames = "name")
     public List<Result> getResultByName(String name) {
-        return organizationCrudRepository.getByCname(name);
+        return organizationRepository.getByCname(name);
     }
 }

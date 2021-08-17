@@ -3,7 +3,11 @@ package com.repository;
 import com.entity.Bank;
 import com.entity.Treasury;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.QueryHint;
+
 
 @Repository
 public interface BankRepository extends JpaRepository<Bank, Long>{

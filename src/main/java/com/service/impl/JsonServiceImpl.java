@@ -1,11 +1,14 @@
 package com.service.impl;
 
-import com.entity.Document;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.model.Result;
 import com.service.DocumentService;
 import com.service.JsonService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,24 +36,29 @@ public class JsonServiceImpl implements JsonService {
         return resultJson;
     }*/
 
-/*    @Override
-    public JSONObject newJsonObject(Organization organization) throws JSONException {
-        JSONObject obj = new JSONObject();
-        int recdocuments = documentService.;
-        int paydocuments = documentGrudRepository.findCountPay(organization.getCname());
-        obj.put("pay", paydocuments);
-        obj.put("rec", recdocuments);
-
-        return obj;
-    }*/
-
     @Override
-    public JSONObject documentsToJson() throws JSONException {
+    @Cacheable(cacheNames = "result")
+    public JSONObject newJsonObject(Result result) throws JSONException {
+        /*GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String all = "";
+
+        return gson.toJson(result);*/
         JSONObject obj = new JSONObject();
-        List<Document> documentList = documentService.findAll();
-        obj.put("documents", documentList.size());
-        obj.put("sum", documentService.getAverageSum());
+        String s = "payer = " + result.getPay() + " recipient = " + result.getRec();
+        obj.put(result.getName(), s);
 
         return obj;
     }
+
+   /* @Override
+    public JSONObject documentsToJson() throws JSONException {
+        /*JSONObject obj = new JSONObject();
+        for (Result result : results) {
+            String s = "pay = " + result.getPay() + " rec = " + result.getRec();
+            obj.put(result.getName(), s);
+        }
+
+        return obj;*/
+    //}
 }

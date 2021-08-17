@@ -1,7 +1,6 @@
 package com.service;
 
 import com.entity.Bank;
-import com.entity.Treasury;
 import com.model.DocModel;
 
 public interface BankService {

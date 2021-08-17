@@ -4,10 +4,10 @@ import com.entity.Bank;
 import com.entity.Document;
 import com.entity.Organization;
 import com.model.DocModel;
-import com.repository.DocumentCrudRepository;
 import com.repository.DocumentRepository;
 import com.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,8 +17,6 @@ import java.util.List;
 public class DocumentServiceImpl implements DocumentService {
     @Autowired
     DocumentRepository documentRepository;
-    @Autowired
-    DocumentCrudRepository documentCrudRepository;
 
     /*@Override
     public String getDocuments() {
@@ -33,16 +31,19 @@ public class DocumentServiceImpl implements DocumentService {
     }*/
 
     @Override
+    @Cacheable(cacheNames = "documentList")
     public BigDecimal getAverageSum() {
         List<Document> documentList = findAll();
-        BigDecimal sum = documentCrudRepository.findAmount();
+        BigDecimal sum = documentRepository.findAmount();
 
         return sum;
     }
 
     @Override
+    @Cacheable(cacheNames = "documentList")
     public List<Document> findAll() {
-        return documentRepository.findAll();
+        List<Document> documentList = documentRepository.findAll();
+        return documentList;
     }
 
     @Override
