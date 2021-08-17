@@ -6,6 +6,8 @@ import com.model.Result;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public interface JsonService {
@@ -15,5 +17,5 @@ public interface JsonService {
 
     //JSONObject documentsToJson() throws JSONException;
 
-    public JSONObject newJsonObject(Result result) throws JSONException;
+    //public File newJsonObject(Result result) throws JSONException, IOException;
 }

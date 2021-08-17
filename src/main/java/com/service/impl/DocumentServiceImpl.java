@@ -18,18 +18,6 @@ public class DocumentServiceImpl implements DocumentService {
     @Autowired
     DocumentRepository documentRepository;
 
-    /*@Override
-    public String getDocuments() {
-        String s = "";
-        List<Document> documentList = findAll();
-
-        for (Document document : documentList) {
-            s = s + documentGrudRepository.find(document.getGuid()) + "\n";
-        }
-
-        return s;
-    }*/
-
     @Override
     @Cacheable(cacheNames = "documentList")
     public BigDecimal getAverageSum() {

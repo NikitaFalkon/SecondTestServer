@@ -4,6 +4,7 @@ import com.entity.Document;
 import com.service.ApacheService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import java.util.List;
 @Service
 public class ApacheServiceImpl implements ApacheService {
     @Override
+    @Cacheable(cacheNames = "documents")
     public void createNewDoc(File file, List<Document> documents) throws IOException {
         Workbook book = new HSSFWorkbook();
         Sheet sheet = book.createSheet("Documents");

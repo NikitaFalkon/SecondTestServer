@@ -1,8 +1,13 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Result {
+    @JsonProperty("Name")
     private String name;
+    @JsonProperty("Recipient")
     private long rec;
+    @JsonProperty("Payer")
     private long pay;
 
     public Result(String name, long pay, long rec) {
