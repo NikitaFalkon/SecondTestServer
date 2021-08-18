@@ -1,7 +1,6 @@
 package com.controller;
 
 import com.entity.Document;
-import com.model.Result;
 import com.repository.DocumentRepository;
 import com.service.ApacheService;
 import com.service.DocumentService;

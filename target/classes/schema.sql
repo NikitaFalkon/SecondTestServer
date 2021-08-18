@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS treasury(
                                       id   INTEGER      NOT NULL AUTO_INCREMENT,
                                       acc VARCHAR(25),
+                                      exist BOOLEAN,
                                       PRIMARY KEY (id)
 );
 CREATE TABLE IF NOT EXISTS bank (
@@ -8,6 +9,7 @@ CREATE TABLE IF NOT EXISTS bank (
     bic VARCHAR(20),
     account VARCHAR(20),
     treasury_ID INTEGER,
+    exist BOOLEAN,
     PRIMARY KEY (id),
     FOREIGN KEY (treasury_ID) REFERENCES treasury(id)
 );
@@ -16,6 +18,7 @@ CREATE TABLE IF NOT EXISTS organization (
     inn VARCHAR(37),
     kpp VARCHAR(20),
     cname VARCHAR(25),
+    exist BOOLEAN,
     PRIMARY KEY (id)
 );
 CREATE TABLE IF NOT EXISTS document (
@@ -25,6 +28,7 @@ CREATE TABLE IF NOT EXISTS document (
     GUID VARCHAR (36),
     number VARCHAR (20),
     type VARCHAR (2),
+    exist BOOLEAN,
     BANKPAY_ID INTEGER,
     ORGPAY_ID INTEGER,
     BANKREC_ID INTEGER,
