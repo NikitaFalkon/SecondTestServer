@@ -2,16 +2,18 @@ package com.repository;
 
 import com.entity.Treasury;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.QueryHints;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.QueryHint;
+import java.util.List;
 
 @Repository
 public interface TreasuryRepository extends JpaRepository<Treasury, Long> {
-    //@QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
-    boolean existsTreasuryByAcc(String acc);
+    Treasury findById(long id);
 
-    //@QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
     Treasury findByAcc(String acc);
+
+    @Override
+    @Query("SELECT  e FROM Treasury e WHERE e.exist=true ")
+    List<Treasury> findAll();
 }

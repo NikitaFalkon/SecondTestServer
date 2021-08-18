@@ -7,6 +7,7 @@ import com.model.DocModel;
 import com.repository.DocumentRepository;
 import com.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,8 @@ public class DocumentServiceImpl implements DocumentService {
     DocumentRepository documentRepository;
 
     @Override
-    @Cacheable(cacheNames = "documentList")
+    @Cacheable(cacheNames = "sum")
     public BigDecimal getAverageSum() {
-        List<Document> documentList = findAll();
         BigDecimal sum = documentRepository.findAmount();
 
         return sum;
@@ -35,6 +35,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    @CachePut(cacheNames="document")
     public void create(DocModel doc, Organization organizationpay,
                             Organization organizationrcp, Bank bankpay, Bank bankrcp) {
         Document document = new Document();
@@ -48,5 +49,14 @@ public class DocumentServiceImpl implements DocumentService {
         document.setPayerOrganization(organizationpay);
         document.setRecipientOrganization(organizationrcp);
         documentRepository.save(document);
+    }
+
+    @Override
+    public void delete(long id) {
+        Document document1 = documentRepository.findById(id);
+        if (document1 != null) {
+            document1.setExist(false);
+            documentRepository.save(document1);
+        }
     }
 }

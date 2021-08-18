@@ -1,7 +1,6 @@
 package com.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "bank")
@@ -14,6 +13,8 @@ public class Bank {
     private String account;
     @Column(name = "bic")
     private String bic;
+    @Column(name = "exist")
+    private boolean exist = true;
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="treasury_id", nullable=false)
     private Treasury treasury;
@@ -48,5 +49,13 @@ public class Bank {
 
     public void setTreasury(Treasury treasury) {
         this.treasury = treasury;
+    }
+
+    public boolean isExist() {
+        return exist;
+    }
+
+    public void setExist(boolean exist) {
+        this.exist = exist;
     }
 }

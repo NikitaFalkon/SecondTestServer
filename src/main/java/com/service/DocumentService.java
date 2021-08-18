@@ -5,6 +5,7 @@ import com.entity.Document;
 import com.entity.Organization;
 import com.model.DocModel;
 
+import javax.print.Doc;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface DocumentService {
     void create(DocModel doc, Organization organizationpay,
                      Organization organizationrcp, Bank bankpay, Bank bankrcp);
 
-    //String getDocuments();
+    void delete(long id);
 }

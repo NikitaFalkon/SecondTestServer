@@ -26,4 +26,8 @@ public interface OrganizationService {
 
     @Cacheable(cacheNames = "name")
     List<Result> getResultByName(String name);
+
+    void delete(long id);
+
+    List<Result> isExist(List<Result> results);
 }

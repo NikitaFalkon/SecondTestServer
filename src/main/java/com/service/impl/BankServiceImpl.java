@@ -4,9 +4,10 @@ import com.entity.Bank;
 import com.model.DocModel;
 import com.repository.BankRepository;
 import com.service.BankService;
+import com.service.DocumentService;
 import com.service.TreasuryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +16,11 @@ public class BankServiceImpl implements BankService {
     BankRepository bankRepository;
     @Autowired
     TreasuryService treasuryService;
+    @Autowired
+    DocumentService documentService;
 
     @Override
-    @Cacheable(cacheNames = "docModel")
+    @CachePut(cacheNames="bank")
     public Bank getBankPay(DocModel docModel) {
         Bank bank = new Bank();
         bank.setBic(docModel.getBic_Pay());
@@ -28,7 +31,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    @Cacheable(cacheNames = "docModel")
+    @CachePut(cacheNames="bank")
     public Bank getBankRcp(DocModel docModel) {
         Bank bank = new Bank();
         bank.setBic(docModel.getBic_Rcp());
@@ -39,6 +42,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    @CachePut(cacheNames="bank")
     public Bank setBank(Bank bank) {
         if (!bankRepository.existsBankByBic(bank.getBic()) ||
                 !bankRepository.existsBankByAccount(bank.getAccount())) {
@@ -53,5 +57,13 @@ public class BankServiceImpl implements BankService {
         bankRepository.save(bank);
 
         return bank;
+    }
+    @Override
+    public void delete(long id) {
+        Bank bank1 = bankRepository.findById(id);
+        if(bank1 !=  null) {
+            bank1.setExist(false);
+            bankRepository.save(bank1);
+        }
     }
 }

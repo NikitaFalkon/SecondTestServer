@@ -12,6 +12,8 @@ public class Treasury {
     private String acc;
     @OneToOne(mappedBy="treasury")
     private Bank bank;
+    @Column(name = "exist")
+    private boolean exist = true;
 
     public long getId() {
         return id;
@@ -35,5 +37,12 @@ public class Treasury {
 
     public void setAcc(String acc) {
         this.acc = acc;
+    }
+    public boolean isExist() {
+        return exist;
+    }
+
+    public void setExist(boolean exist) {
+        this.exist = exist;
     }
 }

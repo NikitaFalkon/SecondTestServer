@@ -20,6 +20,8 @@ public class Document {
     private String type;
     @Column(name = "amount")
     private BigDecimal amount;
+    @Column(name = "exist")
+    private boolean exist = true;
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="bankrec_id", nullable=false)
     private Bank recipientBank;
@@ -111,5 +113,13 @@ public class Document {
 
     public void setAmount(BigDecimal sum) {
         this.amount = sum;
+    }
+
+    public boolean isExist() {
+        return exist;
+    }
+
+    public void setExist(boolean exist) {
+        this.exist = exist;
     }
 }

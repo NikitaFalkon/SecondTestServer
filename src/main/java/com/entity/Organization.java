@@ -16,6 +16,8 @@ public class Organization {
     private String kpp;
     @Column(name = "cname")
     private String cname;
+    @Column(name = "exist")
+    private boolean exist = true;
 
     public long getId() {
         return id;
@@ -49,20 +51,12 @@ public class Organization {
         this.cname = cname;
     }
 
-    /*public List<Document> getRecipientDocuments() {
-        return recipientDocuments;
-    }*/
+    public boolean isExist() {
+        return exist;
+    }
 
-    /*public void setRecipientDocuments(List<Document> recipientDocuments) {
-        this.recipientDocuments = recipientDocuments;
-    }*/
-
-    /*public List<Document> getPayerDocuments() {
-        return payerDocuments;
-    }*/
-
-   /* public void setPayerDocuments(List<Document> payerDocuments) {
-        this.payerDocuments = payerDocuments;
-    }*/
+    public void setExist(boolean exist) {
+        this.exist = exist;
+    }
 
 }

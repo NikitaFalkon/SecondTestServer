@@ -25,4 +25,13 @@ public class TreasuryServiceImpl implements TreasuryService {
 
         return treasury1;
     }
+
+    @Override
+    public void delete(long id) {
+        Treasury treasury1 = treasuryRepository.findById(id);
+        if (treasury1 != null) {
+            treasury1.setExist(false);
+            treasuryRepository.save(treasury1);
+        }
+    }
 }
