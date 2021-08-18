@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 public class ApacheServiceImpl implements ApacheService {
     @Override
-    @Cacheable(cacheNames = "documents")
     public void createNewDoc(File file, List<Document> documents) throws IOException {
         Workbook book = new HSSFWorkbook();
         Sheet sheet = book.createSheet("Documents");

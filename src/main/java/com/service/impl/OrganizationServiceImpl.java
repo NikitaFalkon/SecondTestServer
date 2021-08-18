@@ -6,6 +6,7 @@ import com.model.Result;
 import com.repository.OrganizationRepository;
 import com.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     OrganizationRepository organizationRepository;
 
     @Override
+    @CacheEvict(value = {"organizations", "results"}, allEntries = true)
     public Organization create(Organization organization) {
         organizationRepository.save(organization);
 
@@ -39,6 +41,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             return organizationRepository.findByInn(organization.getInn());
         }
     }
+
     @Override
     @Cacheable(cacheNames = "results")
     public List<Result> getFullResult() {
@@ -58,7 +61,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    @CachePut(cacheNames="organization")
+    @CachePut(cacheNames={"organization"})
     public Organization getInfRcp(DocModel docModel) {
         Organization organization = new Organization();
         organization.setInn(docModel.getInn_Rcp());
@@ -88,6 +91,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    @CacheEvict(value = {"organizations", "results"}, allEntries = true)
     public void delete(long id) {
         Organization organization1 = organizationRepository.findById(id);
         if(organization1 != null) {

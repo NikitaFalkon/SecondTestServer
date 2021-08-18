@@ -4,6 +4,8 @@ import com.entity.Treasury;
 import com.repository.TreasuryRepository;
 import com.service.TreasuryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ public class TreasuryServiceImpl implements TreasuryService {
     @Autowired
     TreasuryRepository treasuryRepository;
 
-    @Cacheable(cacheNames = "account")
+    @CachePut(cacheNames = "treasury")
     public Treasury create(String account) {
         Treasury treasury = treasuryRepository.findByAcc(account);
         if(treasury != null) {
@@ -27,6 +29,7 @@ public class TreasuryServiceImpl implements TreasuryService {
     }
 
     @Override
+    @CacheEvict(value = {"treasury"}, allEntries = true)
     public void delete(long id) {
         Treasury treasury1 = treasuryRepository.findById(id);
         if (treasury1 != null) {

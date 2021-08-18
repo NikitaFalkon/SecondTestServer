@@ -7,6 +7,7 @@ import com.service.BankService;
 import com.service.DocumentService;
 import com.service.TreasuryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
@@ -53,12 +54,15 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    @CacheEvict(value = {"bank"}, allEntries = true)
     public Bank create(Bank bank) {
         bankRepository.save(bank);
 
         return bank;
     }
+
     @Override
+    @CacheEvict(value = {"bank"}, allEntries = true)
     public void delete(long id) {
         Bank bank1 = bankRepository.findById(id);
         if(bank1 !=  null) {

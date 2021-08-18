@@ -7,7 +7,7 @@ import com.model.DocModel;
 import com.repository.DocumentRepository;
 import com.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    @CachePut(cacheNames="document")
+    @CacheEvict(value = {"documentList", "sum"}, allEntries = true)
     public void create(DocModel doc, Organization organizationpay,
                             Organization organizationrcp, Bank bankpay, Bank bankrcp) {
         Document document = new Document();
@@ -52,6 +52,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    @CacheEvict(value = {"documentList", "sum"}, allEntries = true)
     public void delete(long id) {
         Document document1 = documentRepository.findById(id);
         if (document1 != null) {
